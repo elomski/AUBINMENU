@@ -1,0 +1,110 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <canvas id="pdf-canvas" style="width: 100%; max-width: 100%;"></canvas>
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+
+<script>
+    const url = 'https://bsb-menu-elomskis-projects.vercel.app/assets/im/menu%20aubin%20de.pdf';
+  
+    const loadingTask = pdfjsLib.getDocument(url);
+    loadingTask.promise.then(function(pdf) {
+      // On affiche la première page
+      pdf.getPage(1).then(function(page) {
+        const scale = 1.5;
+        const viewport = page.getViewport({ scale: scale });
+  
+        const canvas = document.getElementById('pdf-canvas');
+        const context = canvas.getContext('2d');
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+  
+        const renderContext = {
+          canvasContext: context,
+          viewport: viewport
+        };
+        page.render(renderContext);
+      });
+    });
+  </script>
+  
+</body>
+</html> -->
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Affichage PDF avec PDF.js</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 1rem;
+      background-color: #f9f9f9;
+    }
+
+    #pdf-canvas {
+      border: 1px solid #ccc;
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Menu Cafeteria BSB</h2>
+  <canvas id="pdf-canvas"></canvas>
+
+  <!-- PDF.js depuis CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const url = 'https://bsb-menu-elomskis-projects.vercel.app/assets/im/menu%20aubin%20de.pdf';
+
+      // Configuration PDF.js
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+
+      const loadingTask = pdfjsLib.getDocument(url);
+      loadingTask.promise.then(function (pdf) {
+        // Affiche uniquement la première page (tu peux adapter)
+        pdf.getPage(1).then(function (page) {
+          const scale = 1.5;
+          const viewport = page.getViewport({ scale });
+
+          const canvas = document.getElementById('pdf-canvas');
+          const context = canvas.getContext('2d');
+
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+
+          const renderContext = {
+            canvasContext: context,
+            viewport: viewport
+          };
+
+          page.render(renderContext);
+        });
+      }).catch(function (error) {
+        console.error('Erreur lors du chargement du PDF :', error);
+      });
+    });
+  </script>
+
+</body>
+</html>
